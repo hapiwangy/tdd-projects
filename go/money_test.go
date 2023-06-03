@@ -77,3 +77,31 @@ func assertEqual(t *testing.T, expected Money, actual Money) {
 func (m Money) Divide(divisor int) Money {
 	return Money{amount: m.amount / float64(divisor), currency: m.currency}
 }
+
+type Portfilo []Money
+
+func (p Portfilo) Add(money Money) Portfilo {
+	p = append(p, money)
+	return p
+}
+
+func (p Portfilo) Evaluate(currency string) Money {
+	total := 0.0
+	for _, m := range p {
+		total = total + m.amount
+	}
+	return Money{amount: total, currency: currency}
+}
+func TestAdd(t *testing.T) {
+	var portfilo Portfilo
+	var portfoiloInDollars Money
+
+	fiveDollar := Money{amount: 5, currency: "USD"}
+	tenDollars := Money{amount: 10, currency: "USD"}
+	fifteenDollars := Money{amount: 15, currency: "USD"}
+	portfilo = portfilo.Add(fiveDollar)
+	portfilo = portfilo.Add(tenDollars)
+	portfoiloInDollars = portfilo.Evaluate("USD")
+
+	assertEqual(t, fifteenDollars, portfoiloInDollars)
+}

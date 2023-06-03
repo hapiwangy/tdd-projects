@@ -38,3 +38,23 @@ let actualMoneyAfterDivision = originalMoney.divide(4);
 let expectedMOneyAfterDivision = new Money(1000.5, "KRW");
 // 這個方法可以一次比較物件裡面的所有東西
 assert.deepStrictEqual(actualMoneyAfterDivision, expectedMOneyAfterDivision)
+
+class Portfilo {
+    constructor(){
+        this.moneys = [];
+    }
+    add(...moneys){
+        this.moneys = this.moneys.concat(moneys);
+    }
+    evaluate(currency) {
+        let total = this.moneys.reduce((sum, money) => {
+            return sum + money.amount;
+        }, 0)
+        return new Money(total, currency);
+    }
+}
+
+let fifteenDollars = new Money(15, "USD");
+let portfilo = new Portfilo();
+portfilo.add(fiver, tenner);
+assert.deepStrictEqual(portfilo.evaluate("USD"), fifteenDollars);

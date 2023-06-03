@@ -1,5 +1,6 @@
 import unittest
-
+import functools
+import operator
 # class Dollar:
 #     def __init__(self, amount) -> None:
 #         self.amount = amount
@@ -42,6 +43,14 @@ class TestMoney(unittest.TestCase):
         # self.assertEqual(expectedMoneyAfterDivision.currency,
         #                  actualMoneyAfterDivision.currency)
 
+class Portfoilo:
+    def __init__(self) -> None:
+        self.moneys = []
+    def add(self, *moneys):
+        pass
+    def evaluate(self, currency):
+        total = functools.reduce(operator.add, map(lambda m: m.amount, self.moneys))
+        return Money(total, currency)
 
 if __name__ == '__main__':
     unittest.main()
